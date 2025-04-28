@@ -1,52 +1,95 @@
 <template>
-  <div>
-    <h1>Call Control</h1>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Call Control</h1>
 
-    <div style="margin-bottom: 20px">
-      <label for="toPhoneNumber"><strong>To Phone Number:</strong></label
-      ><br />
+    <!-- Phone Number Input -->
+    <div class="form-group">
+      <label for="toPhoneNumber" class="font-weight-bold">To Phone Number:</label>
       <input
         id="toPhoneNumber"
         type="text"
         v-model="toPhoneNumber"
+        class="form-control"
         placeholder="+1 485 595 3394 (Example Number)"
-        style="padding: 8px; margin-top: 5px; width: 250px"
       />
     </div>
 
-    <button @click="startCall" :disabled="loadingCall || !toPhoneNumber">
-      {{ loadingCall ? "Calling..." : "Call Phone" }}
-    </button>
+    <!-- Call Button -->
+    <div class="d-flex justify-content-center mt-3">
+      <button
+        @click="startCall"
+        :disabled="loadingCall || !toPhoneNumber"
+        class="btn btn-primary"
+      >
+        {{ loadingCall ? "Calling..." : "Call Phone" }}
+      </button>
+    </div>
 
-    <p v-if="callError" class="error">{{ callError }}</p>
+    <!-- Error Message -->
+    <p v-if="callError" class="text-danger mt-3 text-center">{{ callError }}</p>
 
-    <h2>Call History with Details</h2>
-    <button @click="fetchAllTranscripts" :disabled="loadingAllTranscripts">
-      {{ loadingAllTranscripts ? "Loading Transcripts..." : "Refresh Transcripts" }}
-    </button>
-    <p v-if="allTranscriptsError" class="error">{{ allTranscriptsError }}</p>
+    <!-- Call History Section -->
+    <h2 class="mt-5">Call History with Details</h2>
 
-    <div v-if="allTranscriptsWithRecordings && allTranscriptsWithRecordings.length > 0">
-      <ul>
+    <!-- Refresh Transcripts Button -->
+    <div class="d-flex justify-content-center">
+      <button
+        @click="fetchAllTranscripts"
+        :disabled="loadingAllTranscripts"
+        class="btn btn-secondary mt-3"
+      >
+        {{ loadingAllTranscripts ? "Loading Transcripts..." : "Refresh Transcripts" }}
+      </button>
+    </div>
+    <p v-if="allTranscriptsError" class="text-danger text-center mt-3">
+      {{ allTranscriptsError }}
+    </p>
+
+    <!-- Transcripts List -->
+    <div
+      v-if="allTranscriptsWithRecordings && allTranscriptsWithRecordings.length > 0"
+      class="mt-4"
+    >
+      <ul class="list-group">
         <li
           v-for="transcript in allTranscriptsWithRecordings"
           :key="transcript.transcriptSid"
+          class="list-group-item"
         >
-          <strong>Transcript SID:</strong> {{ transcript.transcriptSid }} ({{
-            formatDate(transcript.dateCreated)
-          }}) - Duration: {{ transcript.duration }} seconds
-          <p v-if="transcript.callSid">
-            <strong>Call SID:</strong> {{ transcript.callSid }}
-          </p>
-          <strong>From Number:</strong> {{ transcript.fromNumber }}
-          <p><strong>To Number:</strong> {{ transcript.toNumber }}</p>
-
-          <div v-if="transcript.recordingUrl">
-            <h3>Recording</h3>
-            <audio :src="transcript.recordingUrl" controls></audio>
+          <div class="d-flex justify-content-between">
+            <div>
+              <strong>Transcript SID:</strong> {{ transcript.transcriptSid }} ({{
+                formatDate(transcript.dateCreated)
+              }}) - Duration: {{ transcript.duration }} seconds
+              <p v-if="transcript.callSid">
+                <strong>Call SID:</strong> {{ transcript.callSid }}
+              </p>
+              <strong>From Number:</strong> {{ transcript.fromNumber }}
+              <p><strong>To Number:</strong> {{ transcript.toNumber }}</p>
+            </div>
+            <div>
+              <button
+                v-if="loadingTranscriptDetails !== transcript.transcriptSid"
+                @click="loadTranscriptSentences(transcript.transcriptSid)"
+                class="btn btn-info btn-sm"
+              >
+                Load Transcript
+              </button>
+              <p v-else>Loading Transcript...</p>
+            </div>
           </div>
 
-          <div v-if="transcript.sentences && transcript.sentences.length > 0">
+          <!-- Recording Section -->
+          <div v-if="transcript.recordingUrl" class="mt-3">
+            <h3>Recording</h3>
+            <audio :src="transcript.recordingUrl" controls class="w-100"></audio>
+          </div>
+
+          <!-- Transcript Sentences -->
+          <div
+            v-if="transcript.sentences && transcript.sentences.length > 0"
+            class="mt-3"
+          >
             <h3>Transcript</h3>
             <div
               v-for="sentence in transcript.sentences"
@@ -55,27 +98,22 @@
                 'participant-1': sentence.media_channel === 1,
                 'participant-2': sentence.media_channel === 2,
               }"
+              class="p-2 mb-2 border rounded"
             >
-              <p style="color: black">{{ sentence.transcript }}</p>
+              <p class="mb-1" style="color: black">{{ sentence.transcript }}</p>
               <small>Confidence: {{ parseFloat(sentence.confidence).toFixed(2) }}</small>
             </div>
-          </div>
-          <p v-else-if="loadingTranscriptDetails === transcript.transcriptSid">
-            Fetching Transcript...
-          </p>
-          <div v-else>
-            <button @click="loadTranscriptSentences(transcript.transcriptSid)">
-              Load Transcript
-            </button>
           </div>
         </li>
       </ul>
     </div>
 
+    <!-- No Transcripts Message -->
     <p
       v-else-if="
         allTranscriptsWithRecordings && allTranscriptsWithRecordings.length === 0
       "
+      class="text-center mt-3"
     >
       No transcripts available.
     </p>
@@ -182,44 +220,15 @@ export default {
 </script>
 
 <style scoped>
-/* Add your component-specific styles here */
 .error {
   color: red;
-  margin-top: 10px;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-  padding: 10px;
-}
-
-h3 {
-  margin-top: 10px;
-}
-
-audio {
-  width: 100%;
 }
 
 .participant-1 {
-  background-color: #f0f0f0;
-  padding: 5px;
-  margin-bottom: 5px;
-  border-radius: 5px;
-  text-align: left;
+  background-color: #71a2ca;
 }
 
 .participant-2 {
-  background-color: #e0f7fa;
-  padding: 5px;
-  margin-bottom: 5px;
-  border-radius: 5px;
-  text-align: right;
+  background-color: #28867b;
 }
 </style>

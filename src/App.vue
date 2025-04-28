@@ -1,15 +1,11 @@
 <template>
-  <div>
-    <CallButton />
-  </div>
+  <router-view />
 </template>
 
 <script>
-import CallButton from "./components/CallButtonComponent.vue";
-
 export default {
-  components: {
-    CallButton,
-  },
+  name: "App",
 };
 </script>
+
+<style></style>
