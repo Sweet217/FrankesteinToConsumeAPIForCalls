@@ -76,6 +76,13 @@
                 Load Transcript
               </button>
               <p v-else>Loading Transcript...</p>
+              <button
+                v-if="transcript.sentences && transcript.sentences.length > 0"
+                @click="downloadTranscript(transcript)"
+                class="btn btn-success btn-sm ml-2 m-2"
+              >
+                Download Transcript
+              </button>
             </div>
           </div>
 
@@ -211,6 +218,25 @@ export default {
       } finally {
         this.loadingTranscriptDetails = null;
       }
+    },
+    downloadTranscript(transcript) {
+      const lines = transcript.sentences.map((sentence, index) => {
+        const participant =
+          sentence.media_channel === 1 ? "PBS Support Agent" : "Ai Agent";
+        return `${participant} == ${sentence.transcript}`;
+      });
+
+      const content = lines.join("\n\n");
+      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `Transcript_${transcript.transcriptSid}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     },
   },
   mounted() {

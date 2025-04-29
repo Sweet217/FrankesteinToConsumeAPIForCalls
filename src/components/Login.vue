@@ -69,7 +69,7 @@ export default {
         localStorage.setItem("authenticated", "true");
         this.$router.push("/FrankesteinToConsumeAPIForCalls/make-call");
       } else {
-        this.error = "Incorrect password";
+        this.error = "Incorrect password, contact Gabriel";
       }
     },
   },
