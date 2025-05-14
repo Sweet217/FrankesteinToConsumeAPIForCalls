@@ -233,7 +233,7 @@ export default {
         {
           id: 3,
           from: "+1 954 314 8956",
-          name: "Karen Customer (On test/Development)",
+          name: "Karen Customer",
           voice: "alloy",
           promptFile: "pbs_karen_customer.txt",
           prompt: "",
@@ -241,7 +241,7 @@ export default {
         {
           id: 4,
           from: "+1 385 262 7063",
-          name: "Customer with Gift Arrival Issue (On test/Development)",
+          name: "Customer with Gift Arrival Issue",
           voice: "echo",
           promptFile: "pbs_customer_gift_arrival_issue.txt",
           prompt: "",
