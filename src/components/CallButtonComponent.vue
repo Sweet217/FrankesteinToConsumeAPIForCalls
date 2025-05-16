@@ -201,6 +201,8 @@
 </template>
 
 <script>
+import { from } from "form-data";
+
 export default {
   data() {
     return {
@@ -307,6 +309,7 @@ export default {
             },
             body: JSON.stringify({
               to: this.toPhoneNumber,
+              from: this.selectedProfile.from,
               prompt: this.currentPrompt,
               voice: this.currentVoice,
             }),
