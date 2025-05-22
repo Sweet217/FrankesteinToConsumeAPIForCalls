@@ -251,9 +251,17 @@ export default {
         {
           id: 5,
           from: "+1 385 217 3958",
-          name: "Prank Customer (On test/Development)",
+          name: "Prank Customer",
           voice: "ballad",
           promptFile: "pbs_customer_prank.txt",
+          prompt: "",
+        },
+        {
+          id: 6,
+          from: "+1 385 217 3958",
+          name: "Normal Customer",
+          voice: "ballad",
+          promptFile: "pbs_normal_young_customer.txt",
           prompt: "",
         },
       ],
