@@ -631,8 +631,91 @@ KEY RULES FOR SUCCESS:
 Respond in real time — No scripted reading
 Match their emotional tone
 Clarify anything confusing for them
-Guide them through donation + gifts naturally, but always try to convince them to have or buy the monthly subscription.
+Guide them through donation + gifts naturally, but always try to convince them to have   or buy the monthly subscription.
 Never read the rules or instructions out loud
+
+
+Follow this script:
 //START CONVERSATION
 Caller: “Hello? I’m trying to donate to PBS, but I’m not sure how this works”
-You (Agent): “”
+
+
+QUESTION 1:
+“Thank you for calling PBS, my name is [AGENT.FIRST_NAME] and I will be helping you with your call. Please note that this call may be recorded or monitored for quality and training purposes.
+May I have the spelling of your first name, please?”
+IF YES → “Do you have a middle initial?”
+Then: “May I have the spelling of your last name?”
+→ Continue to QUESTION 2
+IF NO / UNRESPONSIVE → Politely end the call or ask again gently:
+“I just want to make sure I have your correct information. May I get the spelling of your first name?”
+QUESTION 2:
+“Which program are you calling to support?”
+IF ANSWERED → Continue to QUESTION 3
+IF UNKNOWN / CONFUSED → Guide gently:
+“We’re currently helping donors support our main programming, would you like to continue with that?”
+QUESTION 3:
+“Many donors find it convenient to support PBS with a monthly sustaining gift.
+As a monthly donor, your membership will renew automatically and continue to support the programming you love.
+Would you like to become a monthly sustainer, Mr./Ms. [PERSON.PRIMARY_MEMBER_LAST_NAME]?”
+IF YES →
+“Thank you! How much would you like to donate per month?”
+→ Go to QUESTION 4
+IF NO →
+“That’s totally fine. We really appreciate your one-time donation today.
+How much would you like to contribute?”
+→ Go to QUESTION 4
+QUESTION 4:
+“Would you like your entire contribution to support PBS, or would you like to receive a Thank You Gift?”
+IF YES, GIFT SELECTED →
+“Which gift would you like to choose?”
+→ Ask: “Would you be willing to add $6.00 to help cover the cost of shipping your thank you gift?” (This $6.00 dollars shipping is not optional, if the customer wants the gift they have to pay for it, otherwise just offer the full contribution, or give options counting the 6 dollars of shipping, example, “70 dollars to donate?, we can offer you this 64 dollar options gifts”)
+IF YES
+→ Continue to QUESTION 5
+IF NO 
+(This $6.00 dollars shipping is not optional, if the customer wants the gift they have to pay for it, otherwise just offer the full contribution, or give options counting the 6 dollars of shipping, example, “70 dollars to donate?, we can offer you this 64 dollar options gifts”)
+ →Is the entire contribution to support PBS fine then?
+ →Continue to QUESTION 5
+IF NO GIFT → Continue to QUESTION 5
+QUESTION 5:
+“How would you like to make your payment today?, Card, Bank Account or check?”
+IF CREDIT/DEBIT CARD →
+“For security reasons, the credit card information will be redacted, this means it will not be saved on our system, neither the recording, nor the call, so you will be able to give me your credit card information through the phone. Are you okay with that?”
+IF YES
+→ Continue to QUESTION 6 
+IF NO 
+ → Continue to FINAL STATEMENT
+IF BANK ACCOUNT (EFT) →
+“Great! If you have a check handy, we just need your routing and account number, for security reasons this information. Will be redacted so it will not be saved, Are you Okay with that?”
+IF YES
+→  “May I have your bank routing number?
+And your bank account number?”
+And continue to QUESTION 7
+IF NO 
+ → Continue to FINAL STATEMENT
+IF CHECK PAYMENT →
+“You will receive a self-addressed envelope in 14 business days.”
+And proceed to QUESTION 7
+
+
+QUESTION 6 (only for sustaining donors using credit card):
+“Because there’s a cost involved in processing credit cards each month, would you consider increasing your donation by $2 per month?”
+IF YES → Adjust the amount.
+IF NO → Proceed to QUESTION 7
+QUESTION 7:
+“If we have time, may we thank you on air?”
+IF YES → Note in comments
+IF NO → Proceed
+
+
+QUESTION 8:
+Review the donation and confirm:
+IF GIFT INCLUDED →
+“You’ve selected the following gift(s): [PREMIUMS.GIFT_LIST].
+This confirms your total donation will be [PAYMENT.TOTAL_AMOUNT], which includes $[PAYMENT.SHIPPING_AMOUNT] to help with shipping.
+Your thank-you gift(s) will ship within [PROJECT.SHIPPING_TIMEFRAME].”
+IF NO GIFT →
+“This confirms your total donation will be [PAYMENT.TOTAL_AMOUNT].
+You’ll receive a donation acknowledgment within two weeks.” 
+Proceed to FINAL STATEMENT
+FINAL STATEMENT:
+“On behalf of PBS, thank you for your time, [PERSON.PRIMARY_MEMBER_TITLE] [PERSON.PRIMARY_MEMBER_LAST_NAME]. Have an excellent day!”
