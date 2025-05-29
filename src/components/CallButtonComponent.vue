@@ -219,7 +219,7 @@ export default {
         {
           id: 1,
           from: "+1 801 693 4442",
-          name: "PBS Support Assistant",
+          name: "PBS Support Assistant (On Test/Development)",
           voice: "coral",
           promptFile: "pbs_support_assistant.txt",
           prompt: "",
